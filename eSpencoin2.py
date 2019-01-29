@@ -23,7 +23,7 @@ def on_ready():
 	for server in bot.servers:
 		for member in server.members:
 			if(yield from is_without_role(member)):
-				yield from give_zero_role(member)
+				yield from give_new_role(member)
 
 @bot.event
 @asyncio.coroutine 
@@ -38,7 +38,7 @@ def on_error(event, *args):
 @bot.event
 @asyncio.coroutine 
 def on_member_join(member):
-	yield from give_zero_role(member)
+	yield from give_new_role(member)
 
 @asyncio.coroutine 
 def is_without_role(member):
@@ -48,8 +48,8 @@ def is_without_role(member):
 	return True
 
 @asyncio.coroutine
-def give_zero_role(member):
-	role = yield from bot.create_role(member.server, name="balance: 0")
+def give_new_role(member):
+	role = yield from bot.create_role(member.server, name="balance: 1000")
 	yield from bot.add_roles(member, role)
 
 
