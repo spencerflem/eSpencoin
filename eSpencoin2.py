@@ -52,7 +52,6 @@ def give_new_role(member):
 	role = yield from bot.create_role(member.server, name="balance: 1000")
 	yield from bot.add_roles(member, role)
 
-
 @asyncio.coroutine
 def get_balance(member):
 	for role in member.roles:
