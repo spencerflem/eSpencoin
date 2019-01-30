@@ -20,6 +20,15 @@ def clean(message):
     print("BYEEEEEE")
     yield from bot.delete_message(message)
 
+
+def delete_if_orphan(test_role):
+	is_orphan = False
+	for member in test_role.server.members:
+		for role in member.roles:
+			if role == test_role:
+				return
+	yield from bot.delete_role(test_role.server, test_role)
+
 @bot.event
 @asyncio.coroutine 
 def on_message(message):
@@ -30,6 +39,7 @@ def on_message(message):
         asyncio.ensure_future(clean(message))
         if content.startswith("!request "):
             requested_role = content.split("!request ",1)[1].strip('"')
+            print("req: " + requested_role)
             found = False
             given = False
             for role in channel.server.roles:
@@ -49,11 +59,13 @@ def on_message(message):
                 yield from bot.add_reaction(message, '🚫')
         if content.startswith("!remove "):
             requested_role = content.split("!remove ",1)[1].strip('"')
+            print("rem:" + requested_role)
             found = False
             for role in channel.server.roles:
                 if role.name == requested_role:
                     found = True
                     yield from bot.remove_roles(author, role)
+                    yield from delete_if_orphan(role)
                     yield from bot.add_reaction(message, '👌')
             if not found:
                 yield from bot.add_reaction(message, '🚫')

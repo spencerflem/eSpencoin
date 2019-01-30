@@ -61,6 +61,24 @@ def get_balance(member):
 	yield
 
 @asyncio.coroutine
+def make_or_find_role(member, newname):
+	for role in member.server.roles:
+		if role.name == newname:
+			yield from bot.add_roles(member, role)
+			return
+	new_role = yield from bot.create_role(member.server, name=newname, position=1)
+	yield from bot.add_roles(member, new_role)
+
+@asyncio.coroutine
+def delete_if_orphan(test_role):
+	is_orphan = False
+	for member in test_role.server.members:
+		for role in member.roles:
+			if role == test_role:
+				return
+	yield from bot.delete_role(test_role.server, role)
+
+@asyncio.coroutine
 def add_balance(member, amount):
 	for role in member.roles:
 		if role.name.startswith("balance: "):
@@ -69,7 +87,9 @@ def add_balance(member, amount):
 			if isnan(sreal(new_amount)) or isinf(sreal(new_amount)) or isnan(simag(new_amount)) or isinf(simag(new_amount)):
 				return False
 			newname = "balance: " + new_amount
-			yield from bot.edit_role(member.server, role, name=newname)
+			yield from make_or_find_role(member, newname)
+			yield from bot.remove_roles(member, role)
+			yield from delete_if_orphan(role)
 			return True
 	return False
 
