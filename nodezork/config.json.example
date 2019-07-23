@@ -1,0 +1,18 @@
+{
+    "api": {
+        "discord": {
+            "token": "[bot token goes here]"
+        }
+    },
+    "games": [
+        {
+            "name": "exampleName",
+            "prettyName": "Example Name",
+            "path": "/tmp/foobar.z5"
+        }
+    ],
+    "settings": {
+        "commandPrefix": "$",
+        "commentPrefix": "//"
+    }
+}

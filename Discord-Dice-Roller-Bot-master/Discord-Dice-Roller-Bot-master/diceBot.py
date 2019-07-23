@@ -191,4 +191,4 @@ def purge(ctx):
 
 # Follow this helpful guide on creating a bot and adding it to your server. 
 # https://github.com/reactiflux/discord-irc/wiki/Creating-a-discord-bot-&-getting-a-token
-bot.run('NTM5NjgwODM1ODA5MzEyODA0.DzF4eQ.VgUlav3yFG_NDX7mXqmjwU9Lp1c')
+bot.run('NTM5NjQ1OTYyOTQwMDU1NTUz.Dzgwkg.fGS6_Zsl6-q_6Gx3WsK_DJrQiiE')

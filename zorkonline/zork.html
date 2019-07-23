@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Zork Online</title>
+
+  <link href="lib/jquery-ui.min.css" rel="stylesheet">
+  
+  <script src="lib/jquery.min.js"></script>
+  <script src="lib/jquery-ui.min.js"></script>
+
+  <style type="text/css">
+  body{
+    font-family: sans-serif;
+  }
+  </style>
+
+  <script type="text/javascript">
+  $(function(){
+    [
+      ["zork1.z3","Zork I"],
+      ["zork2.z3","Zork II"],
+      ["zork3.z3","Zork III"],
+      ["zdungeon.z5","Zork"],
+      ["ztuu.z5","Zork: The Undiscovered Underground"],
+      ["troll.zblorb.js","Zork: A Troll's Eye View"],
+      ["Adventureland.z5","Adventureland"],
+      ["advent.z3","Adventure"],
+      ["Bronze.zblorb","Bronze"],
+      ["curses.z5.js","Curses"],
+      ["enchanter.z3","Enchanter"],
+      ["hgg.z3","Hitchhiker's Guide to the Galaxy"],
+      ["planetfall.z3","Planetfall"],
+      ["SagebrushCactus.gblorb","Sagebrush Cactus"],
+      ["seastalker.z3","Seastalker"],
+      ["sorcerer.z3","Sorcerer"],
+      ["spellbreaker.z3","Spellbreaker"],
+      ["starcross.z3","Starcross"],
+      ["glulxercise.ulx","Glulxercise"],
+    ].forEach(function(item){
+      $("#list").append(
+        $("<li>").append(
+          $("<a>")
+          .attr("href", item[0])
+          .text(item[1])
+        )
+      );
+    });
+  
+    $("a").on("click", function (e) {
+      e.preventDefault();
+      
+      var story = $(this).attr("href");
+      var dialog = $("div[story='" + story + "']");
+            
+      if( dialog.length == 0 )  
+      {
+        $("<div></div>")
+        .attr("story", story)
+        .append($('<iframe frameborder="0" marginwidth="0" marginheight="0"></iframe>')
+                .attr({
+                  width: 800,
+                  height: 500,
+                  src: "play.html?story=stories/" + story 
+                }))
+        .dialog({
+          title: $(this).text(),
+          autoOpen: true,
+          modal: false,
+          resizable: true,
+          width: "auto",
+          height: "auto",
+          close: function () {
+              $(this).dialog("destroy");
+          }
+        });
+      } 
+      else
+      {
+        dialog.dialog("open");
+      }
+    });
+  });
+  </script>
+
+</head>
+<body>
+<h1>Zork Online<hr/></h1>
+<p>Select a game to play</p>
+<ul id="list"></ul>
+<address><hr/>&copy; 2017 zorkonlne.net</address>
+</body>
+</html>
