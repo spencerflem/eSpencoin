@@ -1,6 +1,6 @@
 TO RUN:
 activate with conda:
-`activate eSpencoin`
+`activate eSpencoin` (this is a note to my future self - you will need to first make a conda env)
 then run the bot:
 `python eSpencoin4.py`
 enjoy!
